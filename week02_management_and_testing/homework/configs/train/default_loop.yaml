@@ -1,0 +1,26 @@
+optimizer:
+  _target_: torch.optim.Adam
+  # _target_: torch.optim.SGD
+  # momentum: 0.9
+  lr: 0.00001
+  # lr: 0.01
+
+loop:
+  # batch_size: 128
+  batch_size: 8
+  num_workers: 2
+  num_epochs: 2
+
+augmentations:
+  - _target_: torchvision.transforms.RandomHorizontalFlip
+    p: 0.5
+
+save:
+  model_directory: saved_models/
+  samples_directory: train_samples/
+  samples_frequency_epochs: 1
+
+wandb:
+  project: diffusion_hw_1
+  run_name: dvc
+  # run_name: adam_lr_0.01
