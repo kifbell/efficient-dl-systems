@@ -161,7 +161,7 @@ class OptimizerConfig(HydraConfig):
 
     _target_: str = "torch.optim.Adam"
     lr: float = 0.00001
-    params: list[torch.nn.Parameter]
+    params: list[torch.nn.Parameter] = []
 
     def instantiate(self, **kwargs: typing.Any) -> torch.optim.Adam:
         return super().instantiate(**kwargs)
