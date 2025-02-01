@@ -1,0 +1,2 @@
+_target_: torchvision.datasets.CIFAR10
+root: cifar10
