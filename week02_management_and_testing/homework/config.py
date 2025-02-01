@@ -173,8 +173,8 @@ class AugmentationConfig(HydraConfig):
 
 
 class SaveConfig(StrongConfig):
-    model_directory: str = "saved_models/"
-    samples_directory: str = "train_samples/"
+    model_directory: Path = Path("saved_models/")
+    samples_directory: Path = Path("train_samples/")
     samples_frequency_epochs: int = 1
 
 
