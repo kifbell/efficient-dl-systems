@@ -1,0 +1,4 @@
+defaults:
+  - dataset: cifar10
+  - train: default_loop
+  - model: default_diffusion
