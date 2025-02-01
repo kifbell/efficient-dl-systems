@@ -6,7 +6,7 @@ from pathlib import Path
 
 from hydra.conf import HydraConf
 from omegaconf import DictConfig
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel, ConfigDict, model_validator
 
 from hydra.utils import instantiate
 from hydra.conf import HydraConf
@@ -157,6 +157,8 @@ class DiffusionConfig(HydraConfig):
 
 
 class OptimizerConfig(HydraConfig):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     _target_: str = "torch.optim.Adam"
     lr: float = 0.00001
     params: list[torch.nn.Parameter]
