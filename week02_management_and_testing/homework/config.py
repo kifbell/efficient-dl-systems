@@ -2,6 +2,7 @@ import functools
 import importlib
 import json
 import typing
+import torch.nn as nn
 from pathlib import Path
 
 from hydra.conf import HydraConf
@@ -10,7 +11,6 @@ from pydantic import BaseModel, ConfigDict, model_validator
 
 from hydra.utils import instantiate
 from hydra.conf import HydraConf
-
 from omegaconf import DictConfig, OmegaConf
 from pydantic import BaseModel
 
@@ -136,24 +136,23 @@ class HydraConfig(BaseConfig, extra='allow'):
             del self.model_extra[item]
 
 
-class UNetConfig(HydraConfig):
+class ModuleConfig(HydraConfig):
+    def instantiate(self, *args: typing.Any, **kwargs: typing.Any) -> nn.Module:
+        return super().instantiate(*args, **kwargs)
+
+
+class UNetConfig(ModuleConfig):
     _target_: str = "modeling.unet.UnetModel"
     in_channels: int = 3
     out_channels: int = 3
     hidden_size: int = 128
 
-    def instantiate(self, **kwargs: typing.Any) -> UnetModel:
-        return super().instantiate(**kwargs)
 
-
-class DiffusionConfig(HydraConfig):
+class DiffusionConfig(ModuleConfig):
     _target_: str = "modeling.diffusion.DiffusionModel"
     eps_model: UNetConfig
     betas: tuple[float, float] = (0.0001, 0.02)
     num_timesteps: int = 1000
-
-    def instantiate(self, **kwargs: typing.Any) -> DiffusionModel:
-        return super().instantiate(**kwargs)
 
 
 class OptimizerConfig(HydraConfig):
