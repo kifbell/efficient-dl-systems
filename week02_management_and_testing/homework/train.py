@@ -35,9 +35,10 @@ def train(cfg: DictConfig):
         config=config.model_dump(),
     )
 
-    ddpm = config.model.instantiate(sample_transform=transforms.Normalize((-1, -1, -1), (2, 2, 2)))
+    ddpm = config.model.instantiate(
+        sample_transform=transforms.Normalize((-1, -1, -1), (2, 2, 2)), eps_model=config.model.eps_model.instantiate()
+    )
     ddpm.to(device)
-
     train_transforms = transforms.Compose(
         [transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]
         + [a.instantiate() for a in config.train.augmentations]
