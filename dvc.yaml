@@ -1,0 +1,17 @@
+stages:
+  prepare_dataset:
+    cmd: ./week02_management_and_testing/homework/load_dataset.py
+    deps:
+      - week02_management_and_testing/homework/load_dataset.py
+      # - configs/dataset/cifar10.yaml
+    outs:
+      - cifar10/
+  train:
+    cmd: ./week02_management_and_testing/homework/train.py
+    deps:
+      - cifar10/
+      - week02_management_and_testing/homework/train.py
+      - week02_management_and_testing/homework/modeling/
+      - week02_management_and_testing/homework/configs/
+    outs:
+      - saved_models/

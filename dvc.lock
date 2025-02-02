@@ -1,0 +1,45 @@
+schema: '2.0'
+stages:
+  prepare_dataset:
+    cmd: ./week02_management_and_testing/homework/load_dataset.py
+    deps:
+    - path: week02_management_and_testing/homework/load_dataset.py
+      hash: md5
+      md5: a1f986e54c6ca8d9e249fd0056518d9b
+      size: 405
+      isexec: true
+    outs:
+    - path: cifar10/
+      hash: md5
+      md5: e252d2c8ba36d1ab3e21a873ab62daa3.dir
+      size: 356712185
+      nfiles: 9
+  train:
+    cmd: ./week02_management_and_testing/homework/train.py
+    deps:
+    - path: cifar10/
+      hash: md5
+      md5: e252d2c8ba36d1ab3e21a873ab62daa3.dir
+      size: 356712185
+      nfiles: 9
+    - path: week02_management_and_testing/homework/configs/
+      hash: md5
+      md5: cf227d55300f70f77d3984feb233a830.dir
+      size: 1312
+      nfiles: 5
+    - path: week02_management_and_testing/homework/modeling/
+      hash: md5
+      md5: 1f857fd45d8851e8ff5d3c8671074033.dir
+      size: 37324
+      nfiles: 13
+    - path: week02_management_and_testing/homework/train.py
+      hash: md5
+      md5: 68765ccf6b301eccb27ed975daa1d962
+      size: 2330
+      isexec: true
+    outs:
+    - path: saved_models/
+      hash: md5
+      md5: 8feb14afe6912d1b6eb15b001ee9476f.dir
+      size: 409172292
+      nfiles: 3
