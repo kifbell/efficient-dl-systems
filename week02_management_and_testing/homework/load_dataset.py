@@ -4,9 +4,13 @@ from omegaconf import DictConfig
 from config import CIFAR10Config
 
 
-@hydra.main(config_path="configs/dataset", config_name="cifar10.yaml", version_base=None)
-def prepare_dataset(cfg: DictConfig):
-    CIFAR10Config.from_omegaconf(cfg).instantiate()
+from omegaconf import OmegaConf
+
+
+def prepare_dataset():
+    cfg = OmegaConf.create(OmegaConf.load("params.yaml"))
+    assert isinstance(cfg, DictConfig)
+    CIFAR10Config.from_omegaconf(cfg.dataset).instantiate()
     print("downloaded dataset")
 
 

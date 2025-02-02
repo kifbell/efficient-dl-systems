@@ -12,6 +12,7 @@ from torchvision import transforms
 from modeling.training import generate_samples, train_epoch
 from modeling.save_utils import save_model
 from config import Config
+from omegaconf import OmegaConf
 
 
 def seed_all(seed: int):
@@ -21,8 +22,11 @@ def seed_all(seed: int):
     torch.cuda.manual_seed_all(seed)
 
 
-@hydra.main(config_path="configs", config_name="config.yaml", version_base=None)
-def train(cfg: DictConfig):
+# @hydra.main(config_path="configs", config_name="config.yaml", version_base=None)
+def train():
+    cfg = OmegaConf.create(OmegaConf.load("params.yaml"))
+    assert isinstance(cfg, DictConfig)
+
     config = Config.from_omegaconf(cfg, resolve=True)
     seed_all(1)
     print(config.model_dump_json(indent=4))
