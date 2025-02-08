@@ -141,3 +141,4 @@ wandb/
 
 train_samples/
 /saved_models
+/cifar10

@@ -1,9 +1,6 @@
 optimizer:
   _target_: torch.optim.Adam
-  # _target_: torch.optim.SGD
-  # momentum: 0.9
   lr: 0.00001
-  # lr: 0.01
 
 loop:
   # batch_size: 128
@@ -23,4 +20,3 @@ save:
 wandb:
   project: diffusion_hw_1
   run_name: dvc
-  # run_name: adam_lr_0.01
