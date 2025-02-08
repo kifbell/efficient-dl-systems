@@ -26,6 +26,10 @@ stages:
       md5: e252d2c8ba36d1ab3e21a873ab62daa3.dir
       size: 356712185
       nfiles: 9
+    - path: conf/train/default_loop.yaml
+      hash: md5
+      md5: 85b3106931344659a1e7ea2d29c7cd35
+      size: 393
     - path: week02_management_and_testing/homework/configs/
       hash: md5
       md5: cf227d55300f70f77d3984feb233a830.dir
@@ -44,6 +48,6 @@ stages:
     outs:
     - path: saved_models/
       hash: md5
-      md5: 8feb14afe6912d1b6eb15b001ee9476f.dir
-      size: 409172292
-      nfiles: 3
+      md5: a6f50e1169fada63bc539df5f30177ca.dir
+      size: 13639162036
+      nfiles: 100
