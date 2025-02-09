@@ -54,13 +54,13 @@ class Carvana(Dataset):
         return len(self.data_path)
 
 
-def get_train_data() -> torch.utils.data.DataLoader:
+def get_train_data(batch_size: int = 128, num_workers: int = 4) -> torch.utils.data.DataLoader:
     train_dataset = Carvana(
         root=".", transform=transforms.Compose([transforms.Resize((256, 256)), transforms.ToTensor()])
     )
 
     train_loader = torch.utils.data.DataLoader(
-        dataset=train_dataset, batch_size=128, shuffle=True, pin_memory=True, num_workers=4
+        dataset=train_dataset, batch_size=batch_size, shuffle=True, pin_memory=True, num_workers=num_workers
     )
 
     return train_loader
@@ -78,7 +78,7 @@ def im_show(img_list: List[Tuple[torch.Tensor, torch.Tensor]]) -> None:
     fig, axes = plt.subplots(len(img_list), 2, figsize=(16, 16))
     fig.tight_layout()
 
-    for (idx, sample) in enumerate(img_list):
+    for idx, sample in enumerate(img_list):
         axes[idx][0].imshow(np.array(to_PIL(sample[0])))
         axes[idx][1].imshow(np.array(to_PIL(sample[1])))
         for ax in axes[idx]:
