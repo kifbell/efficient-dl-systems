@@ -162,6 +162,7 @@ class MultiheadAttention(nn.Module):
         >>> multihead_attn = nn.MultiheadAttention(embed_dim, num_heads)
         >>> attn_output, attn_output_weights = multihead_attn(query, key, value)
     """
+
     bias_k: Optional[torch.Tensor]
     bias_v: Optional[torch.Tensor]
 
