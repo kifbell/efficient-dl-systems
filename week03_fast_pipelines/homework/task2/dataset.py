@@ -105,15 +105,7 @@ class UltraDuperBigBrainDataset(Dataset):
         return len(self.dataset)
 
 
-def collate_fn_for_sequence(
-    batch: list[torch.Tensor], max_length: Optional[int] = MAX_LENGTH
-) -> tuple[torch.Tensor, torch.Tensor]:
-    """
-    Pad each sequence of the incoming sequences list
-    :param batch: a list of the objects received from the dataset by __getitem__
-    :param max_length: maximum sequence length to pad to (for "Brain" approach only)
-    :return: padded sequences and their masks
-    """
+def collate_fn(batch: list[torch.Tensor], max_length: Optional[int] = MAX_LENGTH) -> tuple[torch.Tensor, torch.Tensor]:
     # Clip to maximum length
     batch = [b[:max_length] for b in batch]
     # Calculate length of output batch

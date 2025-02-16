@@ -9,7 +9,14 @@ from torch.utils.data import DataLoader
 
 
 from transformer import PositionalEncoding
-from dataset import BrainDataset, BigBrainDataset, UltraDuperBigBrainDataset, UltraDuperBigBrainBatchSampler, create_dataset, collate_fn_for_sequence
+from dataset import (
+    BrainDataset,
+    BigBrainDataset,
+    UltraDuperBigBrainDataset,
+    UltraDuperBigBrainBatchSampler,
+    create_dataset,
+    collate_fn,
+)
 from dataset import N_TOKENS, DATASET_PATH, DEBUG_DATASET_PATH
 
 
@@ -22,7 +29,10 @@ class DataMode(Enum):
 class GPT2Model(nn.Module):
     def __init__(self, ntoken: int, d_model: int = 1024, nhead: int = 8, dropout: float = 0.1):
         super().__init__()
-        self.encoder = nn.Sequential(nn.Embedding(num_embeddings=ntoken, embedding_dim=d_model), PositionalEncoding(d_model=d_model, dropout=dropout))
+        self.encoder = nn.Sequential(
+            nn.Embedding(num_embeddings=ntoken, embedding_dim=d_model),
+            PositionalEncoding(d_model=d_model, dropout=dropout),
+        )
         self.decoder = nn.TransformerDecoderLayer(d_model=d_model, nhead=nhead, dropout=dropout, batch_first=True)
 
     def forward(self, src, src_mask):
@@ -66,7 +76,9 @@ class Timer:
         return result
 
 
-def run_epoch(data_mode: DataMode, data_path: str = DATASET_PATH, batch_size=32, device="cuda:0", k: int = None) -> None:
+def run_epoch(
+    data_mode: DataMode, data_path: str = DATASET_PATH, batch_size=32, device="cuda:0", k: int = None
+) -> None:
     create_dataset(ntoken=N_TOKENS)
     device = torch.device(device)
 
@@ -80,12 +92,12 @@ def run_epoch(data_mode: DataMode, data_path: str = DATASET_PATH, batch_size=32,
     elif data_mode is DataMode.BIG_BRAIN:
         name = "BigBrain"
         dataset = BigBrainDataset(data_path)
-        collate_fn = collate_fn_for_sequence
+        collate_fn = collate_fn
     elif data_mode is DataMode.ULTRA_DUPER_BIG_BRAIN:
         assert k is not None
         name = f"UltraDuperBigBrain_k={k}"
         dataset = UltraDuperBigBrainDataset(data_path)
-        collate_fn = collate_fn_for_sequence
+        collate_fn = collate_fn
         batch_sampler = UltraDuperBigBrainBatchSampler(dataset, batch_size=batch_size, k=k)
         batch_size = 1
     else:
