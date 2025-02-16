@@ -53,7 +53,7 @@ def create_dataset(ntoken: int = N_TOKENS, force_recompute: bool = False):
     print("Create dataset: Success")
 
 
-def load_custom_dataset(data_path: str) -> list[torch.Tensor]:
+def load_custom_dataset(data_path: Path) -> list[torch.Tensor]:
     print(f"Load dataset from {data_path}")
     dataset = torch.load(data_path)
     print("Load dataset: success")
@@ -61,7 +61,7 @@ def load_custom_dataset(data_path: str) -> list[torch.Tensor]:
 
 
 class BrainDataset(Dataset):
-    def __init__(self, data_path: str = DATASET_PATH, max_length: int = MAX_LENGTH):
+    def __init__(self, data_path: Path = DATASET_PATH, max_length: int = MAX_LENGTH):
         self.dataset = load_custom_dataset(data_path)
         self.max_length = max_length
 
@@ -82,7 +82,7 @@ class BrainDataset(Dataset):
 
 
 class BigBrainDataset(Dataset):
-    def __init__(self, data_path: str = DATASET_PATH, max_length: int = MAX_LENGTH):
+    def __init__(self, data_path: Path = DATASET_PATH, max_length: int = MAX_LENGTH):
         self.dataset = load_custom_dataset(data_path)
         self.max_length = max_length
 
@@ -93,8 +93,8 @@ class BigBrainDataset(Dataset):
         return len(self.dataset)
 
 
-class UltraDuperBigBrainDataset(Dataset):
-    def __init__(self, data_path: str = DATASET_PATH, max_length: int = MAX_LENGTH, n_bins: int = 1):
+class UltraBigBrainDataset(Dataset):
+    def __init__(self, data_path: Path = DATASET_PATH, max_length: int = MAX_LENGTH, n_bins: int = 1):
         self.dataset = load_custom_dataset(data_path)
         self.max_length = max_length
 
@@ -119,10 +119,8 @@ def collate_fn(batch: list[torch.Tensor], max_length: Optional[int] = MAX_LENGTH
     return result, mask
 
 
-class UltraDuperBigBrainBatchSampler(Sampler):
-    def __init__(
-        self, dataset: UltraDuperBigBrainDataset, k: int, batch_size: int, max_length: Optional[int] = MAX_LENGTH
-    ):
+class UltraBigBrainBatchSampler(Sampler):
+    def __init__(self, dataset: UltraBigBrainDataset, k: int, batch_size: int, max_length: Optional[int] = MAX_LENGTH):
         lengths = [len(x) for x in dataset]
         groups = defaultdict(list)
 

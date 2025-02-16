@@ -12,8 +12,8 @@ from transformer import PositionalEncoding
 from dataset import (
     BrainDataset,
     BigBrainDataset,
-    UltraDuperBigBrainDataset,
-    UltraDuperBigBrainBatchSampler,
+    UltraBigBrainDataset,
+    UltraBigBrainBatchSampler,
     create_dataset,
     collate_fn,
 )
@@ -96,9 +96,9 @@ def run_epoch(
     elif data_mode is DataMode.ULTRA_DUPER_BIG_BRAIN:
         assert k is not None
         name = f"UltraDuperBigBrain_k={k}"
-        dataset = UltraDuperBigBrainDataset(data_path)
+        dataset = UltraBigBrainDataset(data_path)
         collate_fn = collate_fn
-        batch_sampler = UltraDuperBigBrainBatchSampler(dataset, batch_size=batch_size, k=k)
+        batch_sampler = UltraBigBrainDataset(dataset, batch_size=batch_size, k=k)
         batch_size = 1
     else:
         assert False, "Unreachable"
